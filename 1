@@ -1,0 +1,98 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class GamePiece : MonoBehaviour
+{
+    private int _x;
+    private int _y;
+    
+    private Grid.PieceType type;
+    private Grid grid;
+
+    private MovablePiece movableComponent;
+    private ColorPiece colorComponent;
+    private ClearablePiece clearableComponent;
+
+    public int X
+    {
+        get => _x;
+        set => IsMovable() ? _x = value : default;
+    }
+
+    public int Y
+    {
+        get => _y;
+        set => IsMovable() ? _y = value : default;
+    }
+
+    public Grid.PieceType Type
+    {
+        get => type;
+    }
+
+    public Grid GridRef
+    {
+        get => grid;
+    }
+
+    public MovablePiece MovableComponent
+    {
+        get => movableComponent;
+    }
+
+    public ColorPiece ColorComponent
+    {
+        get => colorComponent;
+    }
+
+    public ClearablePiece ClearableComponent
+    {
+        get => clearableComponent;
+    }
+
+    void Awake()
+    {
+        movableComponent = GetComponent<MovablePiece>();
+        colorComponent = GetComponent<ColorPiece>();
+        clearableComponent = GetComponent<ClearablePiece>();
+    }
+
+    public GamePiece(int x, int y, Grid grid, Grid.PieceType type)
+    {
+        this._x = x;
+        this._y = y;
+        this.grid = grid;
+        this.type = type;
+    }
+
+    void OnMouseEnter()
+    {
+        grid.EnterPiece(this);
+    }
+
+    void OnMouseDown()
+    {
+        grid.PressPiece(this);
+    }
+
+    void OnMouseUp()
+    {
+        grid.ReleasePiece();
+    }
+
+    public bool IsMovable()
+    {
+        return movableComponent != null && enabled;
+    }
+
+    public bool IsColored()
+    {
+        return colorComponent != null && enabled;
+    }
+
+    public bool IsClearable()
+    {
+        return clearableComponent != null && enabled;
+    }
+}
