@@ -1,0 +1,49 @@
+public static BoardManager instance;   
+public List<Sprite> characters = new List<Sprite>();    
+public GameObject tile;     
+public int xSize, ySize;     // Размеры доски
+private GameObject[,] tiles;      // Массив тайлов
+public bool IsShifting { get; set; }     
+
+void Awake()
+{
+    instance = this; 
+}
+
+void Start() 
+{
+    if (tile == null)
+    {
+        Debug.LogError("Tile prefab is not assigned!");
+        return;
+    }
+
+    Vector2 offset = tile.GetComponent<SpriteRenderer>().bounds.size;
+
+    if (xSize <= 0 || ySize <= 0)
+    {
+        Debug.LogError("Board dimensions must be greater than zero.");
+        return;
+    }
+
+    CreateBoard(offset.x, offset.y);     // Создание доски
+}
+
+private void CreateBoard(float xOffset, float yOffset) 
+{
+    tiles = new GameObject[xSize, ySize];    
+    float startX = transform.position.x;     // Начальная позиция по X
+    float startY = transform.position.y;     // Начальная позиция по Y
+
+    for (int x = 0; x < xSize; x++) // Цикл по X
+    {
+        for (int y = 0; y < ySize; y++) // Цикл по Y
+        {
+            GameObject newTile = Instantiate(
+                tile, 
+                new Vector3(startX + (xOffset * x), startY + (yOffset * y), 0), 
+                tile.transform.rotation);
+            tiles[x, y] = newTile; // Сохранение нового тайла 
+        }
+    }
+}
