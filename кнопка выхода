@@ -1,0 +1,12 @@
+private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+{
+    var messageBoxButtons = MessageBoxButtons.YesNo;
+    string message = "Вы действительно хотите выйти?";
+    string caption = "Выход";
+    
+    if (MessageBox.Show(message, caption, messageBoxButtons) == DialogResult.Yes)
+    {
+        Dispose(); // Если класс реализует IDisposable
+        Close();
+    }
+}
