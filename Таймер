@@ -1,0 +1,19 @@
+csharp
+using UnityEngine;
+using System.Collections;
+
+public class Timer : MonoBehaviour
+{
+    public float timeLeft = 60f; // Время в секундах
+
+    void Update()
+    {
+        timeLeft -= Time.deltaTime;
+
+        if (timeLeft <= 0)
+        {
+            Debug.Log("Время вышло!");
+            // Здесь можно добавить код для завершения игры
+        }
+    }
+}
