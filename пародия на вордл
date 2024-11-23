@@ -1,0 +1,64 @@
+using System;
+
+class WordleGame
+{
+    static void Main()
+    {
+        // Загрузка списка слов
+        string[] words = { "минута", "приказ", "архонт", "сектор", "секция" };
+        
+        // Выбор случайного слова из списка
+        Random random = new Random();
+        string targetWord = words[random.Next(words.Length)];
+
+        int maxAttempts = 6; // Максимальное количество попыток
+
+        for (int attempt = 1; attempt <= maxAttempts; attempt++)
+        {
+            Console.WriteLine($"Попытка {attempt} из {maxAttempts}");
+            Console.Write("Введите ваше предположение: ");
+            string guess = Console.ReadLine().ToLower(); // Преобразуем ввод к нижнему регистру
+
+            if (string.IsNullOrWhiteSpace(guess))
+            {
+                Console.WriteLine("Введите корректное слово.");
+                attempt--; // Не увеличиваем количество попыток
+                continue; // Возвращаемся к началу цикла
+            }
+
+            if (guess.Length != targetWord.Length)
+            {
+                Console.WriteLine($"Пожалуйста, введите слово длиной {targetWord.Length} символов.");
+                attempt--; // Не увеличиваем количество попыток
+                continue; // Возвращаемся к началу цикла
+            }
+
+            if (guess == targetWord)
+            {
+                Console.WriteLine("Верно! Вы выиграли!");
+                return;
+            }
+
+            // Проверяем каждое положение буквы и выводим результат
+            for (int i = 0; i < guess.Length; i++)
+            {
+                char letter = guess[i];
+                if (letter == targetWord[i])
+                {
+                    Console.Write("[{0}] ", letter); // Если буква находится на правильном месте
+                }
+                else if (targetWord.Contains(letter))
+                {
+                    Console.Write("({0}) ", letter); // Если буква есть в слове, но не на этом месте
+                }
+                else
+                {
+                    Console.Write("{0} ", letter); // Если буква отсутствует в слове
+                }
+            }
+            Console.WriteLine();
+        }
+
+        Console.WriteLine("К сожалению, вы проиграли. Правильное слово было: " + targetWord);
+    }
+}
