@@ -1,0 +1,35 @@
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks
+using System.Sindows.Forms;
+
+namespace CeLoadingScreen
+{
+public partical class Form1 : Form
+{
+public Form1()
+{ 
+InitializeComponent();
+}
+
+private void timer1_Tick(object sender, EventArgs e)
+{
+ce_ProgressBar1.Value = ce_ProgressBar1.Value + 1;
+ce_Label2.Text = ce_ProgressBar1.Value.ToString() + " %";
+if (ce_ProgressBar1.Value >= 99)
+{
+timer.Enabled = false;
+Form frm= new Form2();
+frmShow();
+this.Hide();
+}
+}
+private voit timer2_Tick(object sender, EventArgs e)
+{
+ce_Ring_ProgressBar1.Value= ce_RingProgressBar1.Value + 3;
+if ( ce_ RingProgressBar1.Value >= 99)
+{
+ce_RingProgressBar1.Value=0;
+}
+}
+}
